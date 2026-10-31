@@ -1,0 +1,849 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Mi Projeta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+
+<script>
+/* ====================================================================
+   RASTREAMENTO
+   Preencha os IDs abaixo depois de criar as contas. Enquanto um campo
+   estiver vazio, aquela ferramenta simplesmente não carrega, e o resto
+   da página continua funcionando igual.
+   Nada disso funciona no protótipo aberto localmente, só no domínio.
+   ==================================================================== */
+window.MP_CONFIG = {
+  ga4:      "",   // GA4, formato G-XXXXXXXXXX
+  adsId:    "",   // Google Ads, formato AW-XXXXXXXXX
+  adsLabel: "",   // rótulo da conversão, formato AW-XXXXXXXXX/AbCdEfGhIj
+  clarity:  ""    // código do projeto no Microsoft Clarity
+};
+</script>
+
+<style>
+/* Layout: ficha técnica — coluna de texto estreita e medida, rótulos monoespaçados
+   com fio, interrompida por faixas de imagem de ponta a ponta.
+   Cor: identidade Mi Projeta — cinza #F4F4F4, marrom #4F413A, verde-limão #C0FF72.
+   O verde é o único acento: marcador de destaque, botões e sinais de estrutura. */
+:root{
+  --bg:#F4F4F4; --surface:#FFFFFF; --surface-2:#EDEAE6;
+  --ink:#4F413A; --ink-2:#6E6159; --ink-3:#857D77; --line:#DEDAD6;
+  --green:#C0FF72; --green-deep:#4C7619; --green-pale:#EDFBD9; --green-line:#B9DE8A;
+  --on-green:#3A302A; --panel:#3B312B;
+  --f-display:"Poppins","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Poppins","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"Poppins","Helvetica Neue",Arial,sans-serif;
+  --wrap:1080px; --col:660px;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#201C1A; --surface:#282320; --surface-2:#2D2724;
+  --ink:#F3F0ED; --ink-2:#C3B9B1; --ink-3:#948B84; --line:#3A322D;
+  --green:#C0FF72; --green-deep:#C0FF72; --green-pale:#2B3320; --green-line:#4A5B30;
+  --on-green:#2A241F; --panel:#15120F;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#201C1A; --surface:#282320; --surface-2:#2D2724;
+  --ink:#F3F0ED; --ink-2:#C3B9B1; --ink-3:#948B84; --line:#3A322D;
+  --green:#C0FF72; --green-deep:#C0FF72; --green-pale:#2B3320; --green-line:#4A5B30;
+  --on-green:#2A241F; --panel:#15120F;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;padding-bottom:84px}
+@media(min-width:760px){body{padding-bottom:0}}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+img{display:block;max-width:100%;height:auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.16;letter-spacing:-.015em;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--green-deep);outline-offset:3px;border-radius:3px}
+
+.band{width:100%}
+.in{max-width:var(--wrap);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:clamp(44px,7vw,84px)}
+.in.tight{padding-block:clamp(32px,5vw,56px)}
+.col{max-width:var(--col)}
+
+/* marcador verde da identidade */
+mark{background:var(--green);color:var(--on-green);padding:.06em .18em;border-radius:5px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+/* rótulo mono com fio */
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--green-deep);display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.eyebrow::after{content:"";flex:1;height:1px;background:var(--line);min-width:20px}
+
+.lede{font-size:clamp(16.5px,2.1vw,18.5px);color:var(--ink-2);margin-top:16px}
+.h2{font-size:clamp(27px,4.4vw,40px)}
+.h3{font-size:clamp(19px,2.5vw,22px);letter-spacing:-.015em}
+
+/* ---------- header ---------- */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.navin{max-width:var(--wrap);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:11px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+/* marca provisória em tipografia, até o logo definitivo ficar pronto */
+.wordmark{font-family:var(--f-display);font-weight:700;font-size:18px;letter-spacing:-.012em;line-height:1;color:var(--ink);text-decoration:none;flex:none}
+.wordmark em{display:block;font-family:var(--f-mono);font-style:normal;font-weight:400;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:4px}
+.wordmark.lg{font-size:21px}
+.nav-wa{display:none}
+@media(min-width:760px){.nav-wa{display:inline-flex}}
+
+/* ---------- botões ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;background:var(--green);color:var(--on-green);font-family:var(--f-display);font-weight:600;font-size:16px;letter-spacing:-.005em;padding:15px 24px;border:0;border-radius:13px;text-decoration:none;cursor:pointer;transition:transform .15s ease,filter .15s ease}
+.btn:hover{filter:brightness(1.05) saturate(1.06)}
+.btn:active{transform:translateY(1px)}
+.btn.sm{padding:10px 18px;font-size:14.5px;border-radius:11px}
+.btn.block{width:100%}
+.btn svg{width:18px;height:18px;flex:none;fill:currentColor}
+.btn-note{font-family:var(--f-mono);font-size:12px;color:var(--ink-3);margin-top:11px;letter-spacing:.01em}
+
+/* chamada intermediária, repetida ao longo da página */
+.cta-strip{background:var(--green-pale);border:1px solid var(--green-line);border-radius:18px;padding:clamp(20px,2.6vw,28px);display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:34px}
+.cta-strip p{font-family:var(--f-display);font-weight:600;font-size:clamp(17px,2.2vw,21px);letter-spacing:-.012em;line-height:1.32;max-width:34ch;min-width:0}
+.cta-strip .btn{flex:none}
+
+/* barra fixa mobile */
+.dock{position:fixed;left:0;right:0;bottom:0;z-index:35;background:color-mix(in srgb,var(--bg) 94%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+@media(min-width:760px){.dock{display:none}}
+
+/* ---------- hero ---------- */
+.hero .in{padding-block:clamp(34px,5vw,64px) clamp(28px,4vw,48px)}
+h1{font-size:clamp(32px,6.1vw,55px);letter-spacing:-.021em;line-height:1.18}
+.hero-grid{display:grid;gap:clamp(28px,4vw,52px);align-items:center}
+@media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr}}
+.price-anchor{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:26px 0 20px;padding-top:18px;border-top:1px solid var(--line)}
+.price-anchor b{font-family:var(--f-display);font-size:25px;font-weight:700;letter-spacing:-.015em}
+.price-anchor span{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-3);letter-spacing:.02em}
+
+/* par antes/depois */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ba figure{margin:0;position:relative;border-radius:16px;overflow:hidden;background:var(--surface-2)}
+.ba img{width:100%;height:100%;object-fit:cover;aspect-ratio:1/1}
+.ba figcaption{position:absolute;left:11px;top:11px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;background:rgba(32,26,22,.8);color:#F4F4F4;padding:4px 9px;border-radius:4px}
+.ba .after figcaption{background:var(--green);color:var(--on-green)}
+.ba-note{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);margin-top:10px;letter-spacing:.02em}
+
+/* ---------- custo do erro ---------- */
+.cost{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cost-list{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:30px}
+@media(min-width:720px){.cost-list{grid-template-columns:1fr 1fr}}
+.cost-item{background:var(--bg);padding:20px 20px 22px;display:flex;flex-direction:column;gap:7px}
+.cost-item .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.cost-item .t{font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.012em}
+.cost-item .d{font-size:14.8px;color:var(--ink-2);line-height:1.55}
+.punch{margin-top:28px;font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.6vw,23px);letter-spacing:-.012em;line-height:1.38;border-left:4px solid var(--green);padding-left:18px;max-width:620px}
+
+/* ---------- galeria ---------- */
+.gal{display:grid;gap:9px;margin-top:30px;grid-template-columns:repeat(2,1fr)}
+@media(min-width:760px){.gal{grid-template-columns:repeat(3,1fr)}}
+.gal img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:14px}
+@media(min-width:760px){.gal.four{grid-template-columns:repeat(4,1fr)}}
+.pairs{display:grid;gap:clamp(22px,3vw,32px);margin-top:32px}
+@media(min-width:820px){.pairs{grid-template-columns:1fr 1fr}}
+.pair .ba-note{margin-top:12px}
+.gal-label{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin:clamp(34px,4vw,50px) 0 0}
+
+/* ---------- entregáveis ---------- */
+.deliv{display:grid;gap:clamp(26px,3.5vw,48px);align-items:start}
+@media(min-width:880px){.deliv{grid-template-columns:1fr 1fr}}
+.spec{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:1px;background:var(--line);border-block:1px solid var(--line)}
+.spec li{background:var(--bg);display:grid;grid-template-columns:34px 1fr;gap:14px;padding:15px 2px;align-items:start}
+.spec .n{font-family:var(--f-mono);font-size:11.5px;color:var(--green-deep);padding-top:3px;letter-spacing:.04em}
+.spec .b{font-weight:600;color:var(--ink);display:block;font-size:16px}
+.spec .s{display:block;color:var(--ink-2);font-size:14.6px;line-height:1.5}
+.shot{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
+.shot img{width:100%}
+.shot .cap{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);padding:11px 14px;border-top:1px solid var(--line);letter-spacing:.02em}
+
+/* ---------- planilha (painel escuro nos dois temas) ---------- */
+.sheet{background:var(--panel);color:#F3F0ED;border-radius:20px;overflow:hidden}
+.sheet-in{padding:clamp(24px,3.4vw,40px)}
+.sheet h2{color:#F3F0ED}
+.sheet .lede{color:#C1B7AF}
+.sheet .eyebrow{color:var(--green)}
+.sheet .eyebrow::after{background:rgba(243,240,237,.2)}
+.rows{margin-top:24px;border:1px solid rgba(243,240,237,.16);border-radius:13px;overflow:hidden;font-family:var(--f-mono);font-size:13.5px}
+.row{display:flex;justify-content:space-between;gap:14px;padding:11px 15px;border-bottom:1px solid rgba(243,240,237,.1)}
+.row:last-child{border-bottom:0}
+.row.head{background:rgba(243,240,237,.07);letter-spacing:.1em;text-transform:uppercase;font-size:10.5px;color:#C1B7AF}
+.row.total{background:rgba(192,255,114,.13);color:var(--green);font-weight:500}
+.row span:last-child{font-variant-numeric:tabular-nums;font-feature-settings:"tnum";white-space:nowrap}
+.sheet-cap{font-family:var(--f-mono);font-size:11.5px;margin-top:12px;color:#8E857E}
+
+/* ---------- comparativo ---------- */
+.vs{display:grid;gap:14px;margin-top:30px}
+@media(min-width:760px){.vs{grid-template-columns:1fr 1fr}}
+.vs-card{border:1px solid var(--line);border-radius:18px;padding:24px;background:var(--surface)}
+.vs-card.good{border-color:var(--green-line);background:var(--green-pale)}
+.vs-card h3{font-size:17px;margin-bottom:4px}
+.vs-tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:12px}
+.vs-card.good .vs-tag{color:var(--green-deep)}
+.vs ul{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:9px}
+.vs li{display:grid;grid-template-columns:19px 1fr;gap:10px;font-size:15px;color:var(--ink-2);line-height:1.5}
+.vs li i{font-style:normal;font-weight:700;font-family:var(--f-mono);font-size:13px;line-height:1.5}
+.vs-card .no i{color:var(--ink-3)}
+.vs-card .yes i{color:var(--green-deep)}
+.vs-card.good li{color:var(--ink)}
+
+/* ---------- pacotes ---------- */
+.plans{display:grid;gap:16px;margin-top:32px}
+@media(min-width:820px){.plans{grid-template-columns:1fr 1.06fr;align-items:start}}
+.plan{border:1px solid var(--line);border-radius:20px;background:var(--surface);padding:clamp(22px,2.6vw,30px);position:relative}
+.plan.feat{border:2px solid var(--green-line);background:var(--green-pale)}
+.plan .tag{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.plan.feat .tag{color:var(--green-deep)}
+.plan .pin{position:absolute;top:-11px;right:18px;background:var(--green);color:var(--on-green);font-family:var(--f-mono);font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;border-radius:20px}
+.plan h3{font-size:25px;margin:2px 0 8px;letter-spacing:-.015em}
+.plan .for{color:var(--ink-2);font-size:15px}
+.plan .price{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin:19px 0 4px;padding-top:17px;border-top:1px solid var(--line)}
+.plan .price .from{width:100%;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);margin-bottom:-2px}
+.plan.feat .price .from{color:var(--green-deep)}
+.plan.feat .price{border-color:var(--green-line)}
+.plan .price b{font-family:var(--f-display);font-weight:700;font-size:32px;letter-spacing:-.02em}
+.plan .price em{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--ink-3);letter-spacing:.02em}
+.plan .price-note{font-size:12.5px;color:var(--ink-3);margin-top:9px;line-height:1.45}
+.plan ul{list-style:none;padding:0;margin:18px 0 22px;display:grid;gap:10px}
+.plan li{display:block;position:relative;padding-left:27px;font-size:15.2px;color:var(--ink-2);line-height:1.48}
+.plan li i{position:absolute;left:0;top:0;font-style:normal;color:var(--green-deep);font-weight:700;font-size:13px;font-family:var(--f-mono);line-height:1.6}
+.plan li b{color:var(--ink);font-weight:600}
+.plan.feat li{color:var(--ink)}
+.other{margin-top:clamp(28px,3.5vw,40px);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,2.6vw,28px);background:var(--surface);display:grid;gap:16px}
+@media(min-width:820px){.other{grid-template-columns:1fr auto;align-items:center;gap:28px}}
+.other h3{font-size:19px;margin-bottom:7px}
+.other p{font-size:15px;color:var(--ink-2);line-height:1.55;max-width:58ch}
+.other .btn{white-space:nowrap}
+
+/* ---------- mika + diferenciais ---------- */
+.about{display:grid;gap:clamp(24px,3.4vw,44px);align-items:center}
+@media(min-width:760px){.about{grid-template-columns:230px 1fr}}
+.about img{border-radius:20px;width:100%;max-width:230px}
+.about p+p{margin-top:13px}
+.creds{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+.creds span{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.04em;border:1px solid var(--line);border-radius:20px;padding:6px 13px;color:var(--ink-2)}
+.why{display:grid;gap:14px;margin-top:clamp(30px,4vw,46px)}
+@media(min-width:760px){.why{grid-template-columns:repeat(3,1fr)}}
+.why-item{background:var(--bg);border:1px solid var(--line);border-radius:18px;padding:22px}
+.why-item h3{font-size:16.5px;margin-bottom:7px}
+.why-item p{font-size:14.8px;color:var(--ink-2);line-height:1.55}
+.why-item .n{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep);display:block;margin-bottom:11px}
+
+/* ---------- etapas ---------- */
+.steps{list-style:none;padding:0;margin:30px 0 0;display:grid;gap:0}
+.step{display:grid;grid-template-columns:38px 1fr;gap:16px;padding-bottom:26px;position:relative}
+.step:not(:last-child)::before{content:"";position:absolute;left:18px;top:30px;bottom:0;width:1px;background:var(--line)}
+.step .dot{width:38px;height:38px;border-radius:50%;border:1px solid var(--green-line);background:var(--green-pale);display:grid;place-items:center;font-family:var(--f-mono);font-size:12.5px;color:var(--green-deep);position:relative;z-index:1}
+.step .t{display:block;font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.012em}
+.step .d{display:block;color:var(--ink-2);font-size:15px;margin-top:3px;line-height:1.52}
+
+/* ---------- depoimentos ---------- */
+.chats{display:grid;gap:14px;margin-top:30px}
+@media(min-width:820px){.chats{grid-template-columns:repeat(3,1fr);align-items:start}}
+.chat{background:var(--surface-2);border:1px solid var(--line);border-radius:18px;padding:15px}
+.chat .who{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.bubble{background:var(--surface);border-radius:15px;border-top-left-radius:4px;padding:11px 13px;font-size:15px;line-height:1.5;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.bubble+.bubble{margin-top:7px}
+.bubble .time{display:block;text-align:right;font-family:var(--f-mono);font-size:10px;color:var(--ink-3);margin-top:5px}
+
+/* ---------- faq ---------- */
+.faq{margin-top:28px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:17px 34px 17px 0;font-family:var(--f-display);font-weight:600;font-size:16.5px;letter-spacing:-.008em;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:19px;color:var(--green-deep);line-height:1}
+details[open] summary::after{content:"–"}
+details .a{padding:0 0 18px;color:var(--ink-2);font-size:15.4px;max-width:62ch}
+
+/* ---------- form final ---------- */
+.final{background:var(--green-pale);border-top:1px solid var(--green-line)}
+.form-card{background:var(--bg);border:1px solid var(--line);border-radius:20px;padding:clamp(22px,3vw,30px);margin-top:28px;max-width:560px}
+.fields{display:grid;gap:16px}
+@media(min-width:520px){.fields{grid-template-columns:1fr 1fr}.fields .wide{grid-column:1/-1}}
+.field{display:grid;gap:7px;min-width:0}
+.field label{font-family:var(--f-mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)}
+.field select,.field input{font-family:var(--f-body);font-size:16px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 14px;width:100%;appearance:none}
+.field select{background-image:linear-gradient(45deg,transparent 50%,var(--green-deep) 50%),linear-gradient(135deg,var(--green-deep) 50%,transparent 50%);background-position:calc(100% - 19px) 55%,calc(100% - 14px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:40px}
+.preview{font-family:var(--f-mono);font-size:12.6px;color:var(--ink-2);background:var(--surface-2);border:1px dashed var(--line);border-radius:14px;padding:16px;margin-top:18px;line-height:1.6;white-space:pre-wrap}
+.slots{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--green-deep);background:var(--bg);border:1px solid var(--green-line);border-radius:20px;padding:6px 14px;margin-bottom:20px}
+.slots b{width:7px;height:7px;border-radius:50%;background:var(--green-deep);display:block}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);background:var(--surface-2)}
+.foot{display:flex;gap:18px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.foot .m{font-family:var(--f-mono);font-size:12.5px;color:var(--ink-2);letter-spacing:.02em;line-height:1.7}
+.foot .m a{color:var(--green-deep);text-decoration:none}
+.foot .m a:hover{text-decoration:underline}
+.proto{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);margin-top:22px;line-height:1.6;border-top:1px dashed var(--line);padding-top:14px}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <div class="navin">
+    <span class="wordmark">Mi Projeta<em>arquitetura &amp; interiores</em></span>
+    <a class="btn sm nav-wa" data-cta="topo" href="https://wa.me/5512991614407?text=Oi%2C%20Mi!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20o%20projeto%20de%20interiores." target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.65.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.72 2.76 4.23 3.76 2.09.83 2.52.67 2.97.63.45-.04 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.17-.47-.29-.25-.12-1.46-.72-1.69-.8-.23-.09-.39-.13-.56.12-.17.25-.64.8-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.84-.2-.48-.41-.42-.56-.43z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="band hero">
+  <div class="in">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">São José dos Campos · Taubaté · Jacareí · 100% online</div>
+        <h1>O conforto que você merece, no <mark>orçamento que tem.</mark></h1>
+        <p class="lede">Projeto de interiores completo: cada tomada, cada revestimento e cada móvel decididos com calma antes da obra começar, e um manual na mão de quem vai executar.</p>
+        <div class="price-anchor">
+          <b>A partir de R$&nbsp;2.500</b>
+          <span>parcelado · 5% de desconto no Pix</span>
+        </div>
+        <a class="btn" data-cta="hero" href="https://wa.me/5512991614407?text=Oi%2C%20Mi!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20o%20projeto%20de%20interiores." target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.65.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.72 2.76 4.23 3.76 2.09.83 2.52.67 2.97.63.45-.04 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.17-.47-.29-.25-.12-1.46-.72-1.69-.8-.23-.09-.39-.13-.56.12-.17.25-.64.8-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.84-.2-.48-.41-.42-.56-.43z"/></svg>
+          Falar com a Mi no WhatsApp
+        </a>
+        <p class="btn-note">Resposta no mesmo dia · Sem compromisso</p>
+      </div>
+      <div>
+        <div class="ba">
+          <figure><img src="img/ba1-antes.jpg" alt="Área de churrasqueira antes da reforma, com azulejo antigo e bancada de concreto"><figcaption>Antes</figcaption></figure>
+          <figure class="after"><img src="img/ba1-depois.jpg" alt="A mesma área projetada, com piso de terracota, mesa de madeira e marcenaria sob medida"><figcaption>Projeto</figcaption></figure>
+        </div>
+        <p class="ba-note">Área gourmet · projeto residencial · Vale do Paraíba</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CUSTO DO ERRO ============ -->
+<section class="band cost">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">Por que contratar projeto</div>
+      <h2 class="h2">Ninguém te conta quanto custa errar na obra.</h2>
+      <p class="lede">Obra sem projeto não sai mais barata. Ela sai parcelada em prejuízos que aparecem um de cada vez. A gente decide tudo antes, no papel, que é onde mudar de ideia não custa nada.</p>
+    </div>
+    <div class="cost-list">
+      <div class="cost-item">
+        <span class="k">01</span>
+        <span class="t">A tomada no lugar errado</span>
+        <span class="d">Descobre na hora de ligar a geladeira. Quebra o azulejo novo, passa o eletroduto, assenta de novo, pinta de novo.</span>
+      </div>
+      <div class="cost-item">
+        <span class="k">02</span>
+        <span class="t">Piso comprado no chute</span>
+        <span class="d">Comprou a mais e sobrou caixa fechada que a loja não troca. Comprou a menos e o lote novo veio de outra tonalidade.</span>
+      </div>
+      <div class="cost-item">
+        <span class="k">03</span>
+        <span class="t">O armário que não encaixa</span>
+        <span class="d">A marcenaria foi medida depois do revestimento pronto. Sobrou um vão de três dedos que ninguém consegue disfarçar.</span>
+      </div>
+      <div class="cost-item">
+        <span class="k">04</span>
+        <span class="t">O pedreiro decidindo por você</span>
+        <span class="d">Sem desenho na mão, cada profissional resolve do jeito dele. Aí o elétrico contraria o marceneiro, e alguém refaz.</span>
+      </div>
+    </div>
+    <p class="punch">Uma parede derrubada duas vezes custa mais que o projeto inteiro. E o projeto você paga uma vez só.</p>
+  </div>
+</section>
+
+<!-- ============ ANTES E DEPOIS / PORTFÓLIO ============ -->
+<section class="band">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">Projetos entregues</div>
+      <h2 class="h2">Casas de verdade, de gente de verdade.</h2>
+      <p class="lede">Apartamentos e casas do Vale do Paraíba, cada um com o orçamento combinado antes da obra começar.</p>
+    </div>
+    <div class="pairs">
+      <div class="pair">
+        <div class="ba">
+          <figure><img src="img/ba2-antes.jpg" alt="Sala vazia antes da reforma, com piso cerâmico e paredes sem acabamento"><figcaption>Antes</figcaption></figure>
+          <figure class="after"><img src="img/ba2-depois.jpg" alt="A mesma sala projetada, com painel ripado, marcenaria e parede de pedra"><figcaption>Projeto</figcaption></figure>
+        </div>
+        <p class="ba-note">Sala de estar · o mesmo cômodo, antes e depois do projeto</p>
+      </div>
+      <div class="pair">
+        <div class="ba">
+          <figure><img src="img/ba3-antes.jpg" alt="Escada com guarda-corpo metálico branco e armário escuro embaixo"><figcaption>Antes</figcaption></figure>
+          <figure class="after"><img src="img/ba3-depois.jpg" alt="A mesma escada projetada, com guarda-corpo de ferro trabalhado e sala de jantar"><figcaption>Projeto</figcaption></figure>
+        </div>
+        <p class="ba-note">Escada e sala de jantar · o guarda-corpo e o piso mudam o ambiente inteiro</p>
+      </div>
+      <div class="pair">
+        <div class="ba">
+          <figure><img src="img/ba4-antes.jpg" alt="Quarto pequeno e vazio antes da reforma, com piso cerâmico e uma janela"><figcaption>Antes</figcaption></figure>
+          <figure class="after"><img src="img/ba4-depois.jpg" alt="O mesmo quarto projetado para criança, com papel de parede xadrez, boiserie e marcenaria branca"><figcaption>Projeto</figcaption></figure>
+        </div>
+        <p class="ba-note">Quarto infantil · a foto do antes é do canto oposto</p>
+      </div>
+    </div>
+    <p class="gal-label">Outros ambientes</p>
+    <div class="gal four">
+      <img src="img/fin-banheiro.jpg" alt="Banheiro com bancada de madeira, cuba de apoio e revestimento azul">
+      <img src="img/fin-quarto.jpg" alt="Quarto com cabeceira de palhinha e roupa de cama em tons de azul">
+      <img src="img/cozinha.jpg" alt="Cozinha planejada em tons neutros com marcenaria sob medida">
+      <img src="img/sala.jpg" alt="Sala de estar com painel ripado e marcenaria suspensa">
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENTREGÁVEIS ============ -->
+<section class="band" style="background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="in">
+    <div class="deliv">
+      <div>
+        <div class="eyebrow">O que chega na sua mão</div>
+        <h2 class="h2">Um manual de obra que qualquer pedreiro entende.</h2>
+        <p class="lede">Você não precisa decifrar nada. Mas o seu pedreiro, o seu eletricista e o seu marceneiro recebem tudo o que precisam para acertar de primeira.</p>
+        <ul class="spec">
+          <li><span class="n">01</span><span><b class="b">Onde vai cada tomada e cada ponto de água</b><span class="s">Planta de elétrica e hidráulica para o profissional não precisar chutar.</span></span></li>
+          <li><span class="n">02</span><span><b class="b">Quanto comprar de piso e revestimento</b><span class="s">Quantitativo fechado por ambiente. Você compra uma vez, na quantidade certa.</span></span></li>
+          <li><span class="n">03</span><span><b class="b">O desenho de cada móvel planejado</b><span class="s">Medida por medida, pronto para levar ao marceneiro e pedir orçamento.</span></span></li>
+          <li><span class="n">04</span><span><b class="b">Iluminação e forro resolvidos</b><span class="s">Onde fica cada ponto de luz, antes do gesseiro fechar o teto.</span></span></li>
+          <li><span class="n">05</span><span><b class="b">O ambiente em 3D</b><span class="s">Você vê a sua casa pronta antes de gastar o primeiro real.</span></span></li>
+        </ul>
+      </div>
+      <div class="shot">
+        <img src="img/prancha.jpg" alt="Prancha técnica de banheiro com especificação de revestimentos, louças e marcenaria">
+        <p class="cap">Prancha real de especificação, com nome, linha e fornecedor de cada material.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PLANILHA DE CUSTOS ============ -->
+<section class="band">
+  <div class="in">
+    <div class="sheet"><div class="sheet-in">
+      <div class="eyebrow">Só no projeto da obra inteira</div>
+      <h2 class="h2">Você sabe quanto a obra vai custar antes de comprar o primeiro saco de cimento.</h2>
+      <p class="lede">A planilha de previsão de custos lista móveis, eletrodomésticos, louças e metais com valor estimado. Dá para ajustar o projeto ao seu bolso no papel, que é onde sai barato mudar de ideia.</p>
+      <div class="rows">
+        <div class="row head"><span>Item previsto</span><span>Estimativa</span></div>
+        <div class="row"><span>Marcenaria da cozinha</span><span>R$ 14.200</span></div>
+        <div class="row"><span>Revestimento e piso</span><span>R$ 4.850</span></div>
+        <div class="row"><span>Louças e metais</span><span>R$ 3.100</span></div>
+        <div class="row"><span>Iluminação</span><span>R$ 1.640</span></div>
+        <div class="row total"><span>Total previsto</span><span>R$ 23.790</span></div>
+      </div>
+      <p class="sheet-cap">Exemplo ilustrativo de como a planilha é entregue.</p>
+    </div></div>
+    <div class="cta-strip">
+      <p>Quer saber quanto a sua obra vai custar?</p>
+      <a class="btn" data-nav="faixa_planilha" href="#contato">Pedir meu orçamento</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VS PLANEJADOS ============ -->
+<section class="band" style="background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">A dúvida que todo mundo tem</div>
+      <h2 class="h2">“Mas a loja de planejados faz o 3D de graça.”</h2>
+      <p class="lede">Faz mesmo. Só vale lembrar para que serve aquele projeto.</p>
+    </div>
+    <div class="vs">
+      <div class="vs-card">
+        <h3>O 3D da loja de planejados</h3>
+        <span class="vs-tag">Grátis</span>
+        <ul>
+          <li class="no"><i>✕</i>É feito para vender marcenaria: quanto mais módulo, melhor para a loja</li>
+          <li class="no"><i>✕</i>Não resolve elétrica, hidráulica, iluminação nem forro</li>
+          <li class="no"><i>✕</i>Não diz quanto o resto da obra vai custar</li>
+          <li class="no"><i>✕</i>Só vale dentro daquela loja, com os produtos dela</li>
+        </ul>
+      </div>
+      <div class="vs-card good">
+        <h3>O projeto da Mi</h3>
+        <span class="vs-tag">A partir de R$ 2.500</span>
+        <ul>
+          <li class="yes"><i>✓</i>É feito para você gastar bem, inclusive gastando menos</li>
+          <li class="yes"><i>✓</i>Resolve o ambiente inteiro, da tomada ao rodapé</li>
+          <li class="yes"><i>✓</i>Entrega a previsão de custo da obra toda</li>
+          <li class="yes"><i>✓</i>É seu. Leve para qualquer marceneiro e peça três orçamentos</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PACOTES ============ -->
+<section class="band" id="pacotes">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">Pacotes</div>
+      <h2 class="h2">Dois jeitos de começar.</h2>
+      <p class="lede">O valor depende de quantos ambientes entram no projeto e de quanto a obra mexe em elétrica, hidráulica e marcenaria. Você recebe o preço fechado antes de começar, e ele não muda no meio do caminho.</p>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Para reformar</h3>
+        <p class="for">Você vai mexer em elétrica e hidráulica ou fazer marcenaria simples, em um ou dois ambientes.</p>
+        <div class="price"><span class="from">A partir de</span><b>R$ 2.500</b><em>em até 3x</em></div>
+        <p class="price-note">Valor de partida. Cada ambiente a mais entra no orçamento.</p>
+        <ul>
+          <li><i>✓</i>Reunião online de briefing</li>
+          <li><i>✓</i>Layout com a melhor disposição dos móveis</li>
+          <li><i>✓</i>Plantas simplificadas de arquitetura, elétrica, hidráulica, iluminação e forro</li>
+          <li><i>✓</i>Revestimentos de piso e parede com quantitativo</li>
+          <li><i>✓</i>Visualização do espaço em 3D</li>
+          <li><i>✓</i>Detalhamento simplificado de marcenaria e marmoraria</li>
+        </ul>
+        <a class="btn block" data-cta="card_reformar" href="https://wa.me/5512991614407?text=Oi%2C%20Mi!%20Quero%20projeto%20para%20reformar%20um%20ou%20dois%20ambientes." target="_blank" rel="noopener">Falar sobre a reforma</a>
+      </div>
+      <div class="plan feat">
+        <span class="pin">Mais escolhido</span>
+        <h3>Para a obra inteira</h3>
+        <p class="for">A obra é grande e você quer um manual de instruções nas mãos do pedreiro e dos fornecedores.</p>
+        <div class="price"><span class="from">A partir de</span><b>R$ 3.800</b><em>em até 6x</em></div>
+        <p class="price-note">Valor de partida. Cada ambiente a mais entra no orçamento.</p>
+        <ul>
+          <li><i>✓</i>Tudo o que tem no plano anterior</li>
+          <li><i>✓</i><b>Projeto executivo completo:</b> arquitetura, luminotécnico, forro, pontos elétricos e hidráulicos, paginação de pisos e paredes com quantitativo</li>
+          <li><i>✓</i><b>Detalhamento completo</b> de marcenaria e marmoraria</li>
+          <li><i>✓</i><b>Planilha de previsão de custos</b> de móveis, eletrodomésticos, louças e metais</li>
+          <li><i>✓</i>Lista de compras pronta</li>
+        </ul>
+        <a class="btn block" data-cta="card_obra_inteira" href="https://wa.me/5512991614407?text=Oi%2C%20Mi!%20Quero%20projeto%20para%20a%20obra%20inteira." target="_blank" rel="noopener">Falar sobre a obra inteira</a>
+      </div>
+    </div>
+    <div class="other">
+      <div>
+        <h3>Vai construir, ampliar ou precisa aprovar na prefeitura?</h3>
+        <p>Aí o trabalho é outro. Entra a aprovação do projeto na prefeitura e visitas de conferência durante a obra, com a Mi assinando como responsável técnica. Esse atendimento é presencial, só no Vale do Paraíba.</p>
+      </div>
+      <a class="btn" data-cta="bloco_construcao" href="https://wa.me/5512991614407?text=Oi%2C%20Mi!%20Vou%20construir%20ou%20ampliar%20e%20preciso%20de%20projeto%20com%20aprova%C3%A7%C3%A3o%20na%20prefeitura." target="_blank" rel="noopener">Falar sobre a construção</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MIKA ============ -->
+<section class="band" style="background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="in">
+    <div class="about">
+      <img src="img/mika.jpg" alt="Michaela Galvão, arquiteta responsável pela Mi Projeta">
+      <div>
+        <div class="eyebrow">Quem vai cuidar do seu projeto</div>
+        <h2 class="h3" style="font-size:clamp(23px,3.2vw,30px)">Me chamo Michaela, mas pode me chamar de Mi.</h2>
+        <p class="lede">Sou formada em Arquitetura pela Universidade do Vale do Paraíba e há cinco anos trabalho com ambientes residenciais e comerciais.</p>
+        <p class="lede">Acredito que arquitetura não deveria ser privilégio. Por isso meus projetos nascem do custo-benefício: estética e funcionalidade que cabem no seu orçamento, sem que você precise entender de planta para tocar a obra.</p>
+        <div class="creds">
+          <span>CAU · Arquiteta e Urbanista</span>
+          <span>UNIVAP</span>
+          <span>5 anos de projeto</span>
+        </div>
+      </div>
+    </div>
+    <div class="why">
+      <div class="why-item">
+        <span class="n">Como eu trabalho</span>
+        <h3>Sem palavra difícil</h3>
+        <p>Você não precisa entender de planta, e eu não vou te deixar perdida. Traduzo tudo: o que comprar, onde instalar e quanto cada etapa custa.</p>
+      </div>
+      <div class="why-item">
+        <span class="n">Como eu trabalho</span>
+        <h3>O orçamento entra na primeira reunião</h3>
+        <p>O quanto você pode gastar é a primeira pergunta, não a última. Escolho material e móvel a partir daí, sem constrangimento nenhum.</p>
+      </div>
+      <div class="why-item">
+        <span class="n">Como eu trabalho</span>
+        <h3>Tudo pelo WhatsApp</h3>
+        <p>Reunião por vídeo, dúvida respondida no chat e projeto entregue no seu celular. Sem deslocamento e sem formalidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMO FUNCIONA ============ -->
+<section class="band">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">Como funciona</div>
+      <h2 class="h2">Cinco etapas, tudo online.</h2>
+      <p class="lede">Você não precisa sair de casa nem marcar visita. A gente conversa por vídeo, você manda fotos e medidas, e o projeto chega por e-mail e WhatsApp.</p>
+    </div>
+    <ol class="steps">
+      <li class="step"><span class="dot">01</span><span><span class="t">Reunião de briefing</span><span class="d">Uma conversa por vídeo para entender como você vive o espaço, o que incomoda hoje e quanto você pretende investir na obra.</span></span></li>
+      <li class="step"><span class="dot">02</span><span><span class="t">Criação do projeto em 3D</span><span class="d">O ambiente ganha forma: layout, marcenaria, revestimentos e iluminação, tudo em três dimensões.</span></span></li>
+      <li class="step"><span class="dot">03</span><span><span class="t">Apresentação</span><span class="d">Você vê o projeto pronto, comenta, pede ajuste. É aqui que a gente acerta tudo, porque mudar de ideia no 3D é de graça.</span></span></li>
+      <li class="step"><span class="dot">04</span><span><span class="t">Detalhamento executivo</span><span class="d">O projeto vira desenho técnico: medidas, quantitativos e especificações que vão para a mão de quem executa.</span></span></li>
+      <li class="step"><span class="dot">05</span><span><span class="t">Entrega por e-mail e WhatsApp</span><span class="d">Arquivos no seu celular, prontos para encaminhar ao pedreiro, ao marceneiro e às lojas.</span></span></li>
+    </ol>
+    <p class="punch">Prazo total de 30 a 45 dias úteis. Por isso o melhor momento de procurar arquiteto é antes de quebrar a primeira parede.</p>
+  </div>
+</section>
+
+<!-- ============ DEPOIMENTOS ============ -->
+<section class="band" style="background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">Depoimentos</div>
+      <h2 class="h2">O que chega no WhatsApp depois da entrega.</h2>
+    </div>
+    <div class="chats">
+      <div class="chat">
+        <p class="who">Ana Cláudia P. · Cliente</p>
+        <div class="bubble">Ameiiiiii ❤️❤️❤️<br>Quero fazer tudo amanhã<span class="time">08:29</span></div>
+        <div class="bubble">O corredor interno ficou <b>PERFEITO</b><span class="time">08:30</span></div>
+      </div>
+      <div class="chat">
+        <p class="who">Lucas B. · Cliente</p>
+        <div class="bubble">O projeto ficou excelente, estou animado para começar a construir logo kkkkk achamos uma solução muito boa para o terreno, o espaço rendeu e foi aproveitado ao máximo<span class="time">09:54</span></div>
+      </div>
+      <div class="chat">
+        <p class="who">Amanda P. · Cliente</p>
+        <div class="bubble">Boa tarde. A casa ficou ótima, tem tudo o que pedimos e vai atender as nossas necessidades. Obrigada pelo cuidado com o nosso projeto<span class="time">13:15</span></div>
+      </div>
+    </div>
+    <div class="cta-strip">
+      <p>A próxima mensagem dessa pode ser a sua.</p>
+      <a class="btn" data-nav="faixa_depoimentos" href="#contato">Quero o meu projeto</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="band">
+  <div class="in">
+    <div class="col">
+      <div class="eyebrow">Perguntas frequentes</div>
+      <h2 class="h2">As dúvidas que mais chegam.</h2>
+      <div class="faq">
+        <details open><summary>Funciona mesmo sendo tudo online?</summary><p class="a">Funciona. A reunião é por vídeo, você envia fotos e as medidas do ambiente (a gente te explica como medir, é simples) e o projeto chega por e-mail e WhatsApp. É assim que dá para atender com esse preço, sem custo de deslocamento embutido.</p></details>
+        <details><summary>Vocês atendem a minha cidade?</summary><p class="a">Atendemos todo o Vale do Paraíba: São José dos Campos, Taubaté, Jacareí, Caçapava e região. Como o atendimento é online, projetos para outras cidades também são possíveis.</p></details>
+        <details><summary>Quanto tempo leva para ficar pronto?</summary><p class="a">De 30 a 45 dias úteis do briefing até a entrega final, se não houver intercorrências. O ideal é procurar antes da obra começar, para o projeto não virar correria.</p></details>
+        <details><summary>Como eu pago?</summary><p class="a">Pix à vista com 5% de desconto; Pix parcelado em 50% no aceite, 25% em 30 dias e 25% em 60 dias; ou cartão, em até 3x no Para reformar e até 6x no Para a obra inteira, com as taxas da plataforma.</p></details>
+        <details><summary>Por que o preço não é fixo?</summary><p class="a">Porque projetar um banheiro não dá o mesmo trabalho que projetar a casa inteira. Cada ambiente tem o próprio layout, o próprio 3D, o próprio detalhamento de marcenaria e os próprios pontos de elétrica. Por isso o valor depende de quantos ambientes entram e de quanto a obra mexe em elétrica, hidráulica e marcenaria. Na primeira conversa você recebe o valor fechado para o seu caso, por escrito, e ele vale até o fim do projeto.</p></details>
+        <details><summary>E se eu não gostar do projeto?</summary><p class="a">Existe uma etapa de apresentação antes do detalhamento executivo, feita justamente para isso. Você vê o 3D, comenta e pede ajuste. O projeto só segue para o detalhamento depois que você aprova.</p></details>
+        <details><summary>Preciso contratar a obra com vocês?</summary><p class="a">Não. O projeto é seu e você executa com quem quiser. Inclusive, com o detalhamento na mão fica muito mais fácil pedir orçamento para três marceneiros diferentes e comparar de verdade.</p></details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="band final" id="contato">
+  <div class="in">
+    <div class="col">
+      <div class="slots"><b></b>Agenda aberta para 2 projetos por mês</div>
+      <h2 class="h2">Conta rapidinho o que você quer fazer.</h2>
+      <p class="lede">Quatro perguntas e a conversa já começa no ponto certo. A Mi responde no mesmo dia.</p>
+    </div>
+    <div class="form-card">
+      <div class="fields">
+        <div class="field">
+          <label for="f-tipo">O que você vai fazer?</label>
+          <select id="f-tipo">
+            <option>Reforma</option>
+            <option>Construção</option>
+            <option>Ampliação</option>
+            <option>Só decoração e móveis</option>
+            <option>Espaço comercial</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-amb">Quantos ambientes?</label>
+          <select id="f-amb">
+            <option>1 ambiente</option>
+            <option>2 ambientes</option>
+            <option>3 ambientes</option>
+            <option>4 ou mais</option>
+            <option>A casa inteira</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-prazo">Quando a obra começa?</label>
+          <select id="f-prazo">
+            <option>Ainda estou planejando</option>
+            <option>Nos próximos 3 meses</option>
+            <option>No mês que vem</option>
+            <option>A obra já começou</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-cidade">Sua cidade</label>
+          <input id="f-cidade" type="text" placeholder="São José dos Campos" autocomplete="address-level2">
+        </div>
+      </div>
+      <p class="preview" id="preview"></p>
+      <a class="btn block" id="cta" data-cta="formulario" style="margin-top:18px" href="https://wa.me/5512991614407" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24M8.53 7.33c-.16 0-.43.06-.65.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.72 2.76 4.23 3.76 2.09.83 2.52.67 2.97.63.45-.04 1.46-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.17-.47-.29-.25-.12-1.46-.72-1.69-.8-.23-.09-.39-.13-.56.12-.17.25-.64.8-.78.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.76-1.84-.2-.48-.41-.42-.56-.43z"/></svg>
+        Enviar no WhatsApp
+      </a>
+      <p class="btn-note">Seus dados vão só para a Mi. Você não entra em nenhuma lista de e-mail.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="in tight">
+    <div class="foot">
+      <span class="wordmark lg">Mi Projeta<em>arquitetura &amp; interiores</em></span>
+      <div class="m"><a href="https://instagram.com/mi.projeta" target="_blank" rel="noopener">@mi.projeta</a> · (12) 99161-4407<br>Vale do Paraíba · Atendimento online</div>
+    </div>
+    <p class="proto">Protótipo de landing page para campanha de Google Ads. Marca provisória em tipografia, aguardando o logo definitivo da Mi Projeta. Valores, prazos e condições reproduzidos da proposta comercial; a planilha de custos é um exemplo ilustrativo e precisa ser substituída por dados reais antes da publicação.</p>
+  </div>
+</footer>
+
+<div class="dock">
+  <a class="btn block" data-nav="barra_celular" href="#contato">Quero meu projeto</a>
+</div>
+
+<script>
+(function(){
+  var PHONE = "5512991614407";
+  var tipo = document.getElementById("f-tipo");
+  var amb = document.getElementById("f-amb");
+  var prazo = document.getElementById("f-prazo");
+  var cidade = document.getElementById("f-cidade");
+  var cta = document.getElementById("cta");
+  var preview = document.getElementById("preview");
+
+  function build(){
+    var c = (cidade.value || "").trim();
+    var msg = "Oi, Mi! Quero um projeto.\n\n"
+            + "• Tipo: " + tipo.value + "\n"
+            + "• Ambientes: " + amb.value + "\n"
+            + "• Obra: " + prazo.value + "\n"
+            + "• Cidade: " + (c || "—");
+    preview.textContent = msg;
+    cta.href = "https://wa.me/" + PHONE + "?text=" + encodeURIComponent(msg);
+  }
+  [tipo, amb, prazo].forEach(function(el){ el.addEventListener("change", build); });
+  cidade.addEventListener("input", build);
+  build();
+})();
+</script>
+
+<script>
+/* Camada de rastreamento. Lê os IDs de window.MP_CONFIG, lá no topo. */
+(function(){
+  var C = window.MP_CONFIG || {};
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ window.dataLayer.push(arguments); }
+  if (!window.gtag) window.gtag = gtag;
+
+  /* GA4 e Google Ads compartilham o mesmo script */
+  var tagId = C.ga4 || C.adsId;
+  if (tagId) {
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(tagId);
+    document.head.appendChild(s);
+    gtag("js", new Date());
+    if (C.ga4)   gtag("config", C.ga4);
+    if (C.adsId) gtag("config", C.adsId);
+  }
+
+  /* Microsoft Clarity */
+  if (C.clarity) {
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", C.clarity);
+  }
+
+  /* Origem do visitante: guarda gclid e utm da primeira visita */
+  var ORIGEM = {};
+  try {
+    var q = new URLSearchParams(location.search), achou = false;
+    ["gclid","wbraid","gbraid","utm_source","utm_medium","utm_campaign","utm_term","utm_content"]
+      .forEach(function(k){ var v = q.get(k); if (v) { ORIGEM[k] = v; achou = true; } });
+    if (achou) {
+      ORIGEM.visto_em = new Date().toISOString();
+      localStorage.setItem("mp_origem", JSON.stringify(ORIGEM));
+    } else {
+      var salvo = localStorage.getItem("mp_origem");
+      if (salvo) ORIGEM = JSON.parse(salvo) || {};
+    }
+  } catch(e){ ORIGEM = {}; }
+
+  function evento(nome, dados){
+    var p = { event: nome };
+    for (var k in dados) if (Object.prototype.hasOwnProperty.call(dados,k)) p[k] = dados[k];
+    p.gclid = ORIGEM.gclid || ORIGEM.wbraid || ORIGEM.gbraid || "";
+    p.campanha = ORIGEM.utm_campaign || "";
+    window.dataLayer.push(p);
+    if (tagId) gtag("event", nome, p);
+    if (window.clarity) { try { window.clarity("event", nome); } catch(e){} }
+  }
+  window.mpEvento = evento;
+
+  /* Saídas reais para o WhatsApp: evento + conversão no Google Ads */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-cta]"), function(el){
+    el.addEventListener("click", function(){
+      var pos = el.getAttribute("data-cta");
+      evento("clique_whatsapp", { posicao: pos });
+      if (C.adsLabel) gtag("event", "conversion", { send_to: C.adsLabel, posicao: pos });
+    });
+  });
+
+  /* Botões que só rolam até o formulário: engajamento, não conversão */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-nav]"), function(el){
+    el.addEventListener("click", function(){
+      evento("clique_interno", { posicao: el.getAttribute("data-nav") });
+    });
+  });
+
+  /* Profundidade de rolagem */
+  var marcos = [25,50,75,100], vistos = {}, tmr;
+  function rolagem(){
+    var h = document.documentElement;
+    var total = h.scrollHeight - h.clientHeight;
+    if (total <= 0) return;
+    var pct = Math.round((h.scrollTop || document.body.scrollTop) / total * 100);
+    marcos.forEach(function(m){
+      if (pct >= m && !vistos[m]) { vistos[m] = 1; evento("rolagem", { profundidade: m }); }
+    });
+  }
+  window.addEventListener("scroll", function(){
+    clearTimeout(tmr); tmr = setTimeout(rolagem, 180);
+  }, { passive: true });
+
+  /* Qual pergunta do FAQ foi aberta */
+  Array.prototype.forEach.call(document.querySelectorAll("details"), function(d){
+    d.addEventListener("toggle", function(){
+      if (!d.open) return;
+      var s = d.querySelector("summary");
+      evento("faq_aberto", { pergunta: s ? s.textContent.trim() : "" });
+    });
+  });
+
+  /* Formulário: quem começa e quem abandona */
+  var comecou = false, enviou = false;
+  ["f-tipo","f-amb","f-prazo","f-cidade"].forEach(function(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    function inicio(){ if (!comecou) { comecou = true; evento("form_iniciado"); } }
+    el.addEventListener("change", inicio);
+    el.addEventListener("input", inicio);
+  });
+  var ctaForm = document.getElementById("cta");
+  if (ctaForm) ctaForm.addEventListener("click", function(){ enviou = true; });
+  window.addEventListener("pagehide", function(){
+    if (comecou && !enviou) evento("form_abandonado");
+  });
+})();
+</script>
+</body>
+</html>

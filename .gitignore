@@ -1,0 +1,6 @@
+# Só index.html e img/ vão para o servidor (ver DEPLOY.txt)
+*
+!index.html
+!img/
+!img/**
+!.gitignore
