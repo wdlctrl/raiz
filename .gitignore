@@ -1,6 +1,12 @@
-# Só index.html e img/ vão para o servidor (ver DEPLOY.txt)
-*
-!index.html
-!img/
-!img/**
-!.gitignore
+# Notas internas: NUNCA versionar. Contêm estratégia de preço e
+# informações do cliente, e qualquer arquivo na raiz vira URL pública.
+LEIA-ME.txt
+DEPLOY.txt
+versao-A-*.html
+versao-B-*.html
+*.pdf
+
+.DS_Store
+Thumbs.db
+node_modules/
+.vercel
