@@ -81,7 +81,7 @@ a{color:inherit}
 .in.tight{padding-block:clamp(32px,5vw,56px)}
 .col{max-width:var(--col)}
 /* linha de apoio: cabe inteira, sem sobrar rabinho na segunda linha */
-.col.larga{max-width:960px}
+.col.larga{max-width:none}
 
 /* marcador verde da identidade */
 mark{background:var(--green);color:var(--on-green);padding:.02em .16em;border-radius:5px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone}
@@ -117,7 +117,6 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:co
 }
 :root[data-theme="dark"] .logo .claro{display:none}
 :root[data-theme="dark"] .logo .escuro{display:block}
-.logo-desc{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-top:10px}
 .nav-wa{display:none}
 @media(min-width:760px){.nav-wa{display:inline-flex}}
 
@@ -132,7 +131,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:co
 
 /* chamada intermediária, repetida ao longo da página */
 .cta-strip{background:var(--green-pale);border:1px solid var(--green-line);border-radius:18px;padding:clamp(20px,2.6vw,28px);display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:34px}
-.cta-strip p{font-family:var(--f-display);font-weight:600;font-size:clamp(17px,2.2vw,21px);letter-spacing:-.012em;line-height:1.32;max-width:34ch;min-width:0}
+.cta-strip p{font-family:var(--f-display);font-weight:600;font-size:clamp(17px,2.2vw,21px);letter-spacing:-.012em;line-height:1.32;min-width:0}
 .cta-strip .btn{flex:none}
 
 /* barra fixa mobile */
@@ -168,7 +167,7 @@ h1{font-size:clamp(29px,5.2vw,48px);letter-spacing:-.021em;line-height:1.2}
 .cost-item .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--green-deep)}
 .cost-item .t{font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.012em}
 .cost-item .d{font-size:14.8px;color:var(--ink-2);line-height:1.55}
-.punch{margin-top:28px;font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.6vw,23px);letter-spacing:-.012em;line-height:1.38;border-left:4px solid var(--green);padding-left:18px;max-width:620px}
+.punch{margin-top:28px;font-family:var(--f-display);font-weight:600;font-size:clamp(18px,2.6vw,23px);letter-spacing:-.012em;line-height:1.38;border-left:4px solid var(--green);padding-left:18px}
 
 /* ---------- galeria ---------- */
 .gal{display:grid;gap:9px;margin-top:30px;grid-template-columns:repeat(2,1fr)}
@@ -181,9 +180,9 @@ h1{font-size:clamp(29px,5.2vw,48px);letter-spacing:-.021em;line-height:1.2}
 /* ---------- entregáveis ---------- */
 .deliv{display:grid;gap:clamp(26px,3.5vw,48px);align-items:start}
 @media(min-width:880px){.deliv{grid-template-columns:1fr 1fr}}
-.spec{list-style:none;padding:0;margin:26px 0 0;display:grid;gap:1px;background:var(--line);border-block:1px solid var(--line)}
-.spec li{background:var(--bg);display:grid;grid-template-columns:34px 1fr;gap:14px;padding:15px 2px;align-items:center}
-.spec .n{font-size:18px;line-height:1;color:var(--green-deep);text-align:center}
+.spec{list-style:none;padding:0;margin:26px 0 0;border-top:1px solid var(--line)}
+.spec li{display:grid;grid-template-columns:26px 1fr;gap:12px;padding:15px 2px;align-items:start;border-bottom:1px solid var(--line)}
+.spec .n{font-size:18px;line-height:1.45;color:var(--green-deep);text-align:left}
 .spec .b{font-weight:600;color:var(--ink);display:block;font-size:16px}
 .spec .s{display:block;color:var(--ink-2);font-size:14.6px;line-height:1.5}
 .shot{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
@@ -286,7 +285,7 @@ summary{cursor:pointer;list-style:none;padding:17px 34px 17px 0;font-family:var(
 summary::-webkit-details-marker{display:none}
 summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:19px;color:var(--green-deep);line-height:1}
 details[open] summary::after{content:"–"}
-details .a{padding:0 0 18px;color:var(--ink-2);font-size:15.4px;max-width:62ch}
+details .a{padding:0 0 18px;color:var(--ink-2);font-size:15.4px}
 
 /* ---------- form final ---------- */
 .final{background:var(--green-pale);border-top:1px solid var(--green-line)}
@@ -386,7 +385,7 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
         <span class="d">Sem desenho na mão, cada profissional resolve do jeito dele. Aí o elétrico contraria o marceneiro, e alguém refaz.</span>
       </div>
     </div>
-    <p class="punch">Uma parede derrubada duas vezes custa mais que o projeto inteiro. <mark class="wrap">E o projeto você paga uma vez só.</mark></p>
+    <p class="punch">Uma parede derrubada duas vezes custa mais que o projeto inteiro.<br><mark class="wrap">E o projeto você paga uma vez só.</mark></p>
   </div>
 </section>
 
@@ -395,7 +394,7 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
   <div class="in">
     <div class="eyebrow">Projetos entregues</div>
     <div class="col larga">
-      <h2 class="h2 bar">Casas de verdade, de gente de verdade.</h2>
+      <h2 class="h2">Casas de verdade, <span class="sub">de gente de verdade</span>.</h2>
       <p class="lede">Apartamentos e casas no Vale do Paraíba com orçamento definido antes da obra começar.</p>
     </div>
     <div class="pairs">
@@ -506,7 +505,7 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
 <section class="band" id="pacotes">
   <div class="in">
     <div class="eyebrow">Pacotes</div>
-    <div class="col">
+    <div class="col larga">
       <h2 class="h2">Dois jeitos de começar.</h2>
       <p class="lede">O valor depende de quantos ambientes entram no projeto e de quanto a obra mexe em elétrica, hidráulica e marcenaria. Você recebe o preço fechado antes de começar, e <span class="sub">ele não muda no meio do caminho</span>.</p>
     </div>
@@ -585,7 +584,7 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
 <section class="band">
   <div class="in">
     <div class="eyebrow">Como funciona</div>
-    <div class="col">
+    <div class="col larga">
       <h2 class="h2">Cinco etapas, tudo online.</h2>
       <p class="lede">Você não precisa sair de casa nem marcar visita. A gente conversa por vídeo, você manda fotos e medidas, e o projeto chega por e-mail e WhatsApp.</p>
     </div>
@@ -633,7 +632,7 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
 <section class="band">
   <div class="in">
     <div class="eyebrow">Perguntas frequentes</div>
-    <div class="col">
+    <div class="col larga">
       <h2 class="h2">As dúvidas que mais chegam.</h2>
     </div>
     <div class="faq">
@@ -706,13 +705,10 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
 <footer>
   <div class="in tight">
     <div class="foot">
-      <div>
-        <span class="logo lg" role="img" aria-label="Mi Projeta">
-          <img class="claro" src="img/logo-marrom.png" alt="" width="651" height="120">
-          <img class="escuro" src="img/logo-bege.png" alt="" width="651" height="120">
-        </span>
-        <p class="logo-desc">Arquitetura &amp; interiores</p>
-      </div>
+      <span class="logo lg" role="img" aria-label="Mi Projeta">
+        <img class="claro" src="img/logo-marrom.png" alt="" width="651" height="120">
+        <img class="escuro" src="img/logo-bege.png" alt="" width="651" height="120">
+      </span>
       <div class="m"><a href="https://instagram.com/mi.projeta" target="_blank" rel="noopener">@mi.projeta</a> · (12) 99161-4407<br>Vale do Paraíba · Atendimento online</div>
     </div>
   </div>
@@ -868,6 +864,73 @@ footer{border-top:1px solid var(--line);background:var(--surface-2)}
   });
 })();
 </script>
+
+<!-- faq-schema:inicio -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
+ "mainEntity": [
+  {
+   "@type": "Question",
+   "name": "Funciona mesmo sendo tudo online?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Funciona. A reunião é por vídeo, você envia fotos e as medidas do ambiente (a gente te explica como medir, é simples) e o projeto chega por e-mail e WhatsApp. É assim que dá para atender com esse preço, sem custo de deslocamento embutido."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Vocês atendem a minha cidade?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Atendemos todo o Vale do Paraíba: São José dos Campos, Taubaté, Jacareí, Caçapava e região. Como o atendimento é online, projetos para outras cidades também são possíveis."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Quanto tempo leva para ficar pronto?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "De 30 a 45 dias úteis do briefing até a entrega final, se não houver intercorrências. O ideal é procurar antes da obra começar, para o projeto não virar correria."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Como eu pago?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Pix à vista com 5% de desconto; Pix parcelado em 50% no aceite, 25% em 30 dias e 25% em 60 dias; ou cartão, em até 3x no “Para reformar” e até 6x no “Para a obra inteira”, com as taxas da plataforma."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Por que o preço não é fixo?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Porque projetar um banheiro não dá o mesmo trabalho que projetar a casa inteira. Cada ambiente tem o próprio layout, o próprio 3D, o próprio detalhamento de marcenaria e os próprios pontos de elétrica. Por isso o valor depende de quantos ambientes entram e de quanto a obra mexe em elétrica, hidráulica e marcenaria. Na primeira conversa você recebe o valor fechado para o seu caso, por escrito, e ele vale até o fim do projeto."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "E se eu não gostar do projeto?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Existe uma etapa de apresentação antes do detalhamento executivo, feita justamente para isso. Você vê o 3D, comenta e pede ajuste. O projeto só segue para o detalhamento depois que você aprova."
+   }
+  },
+  {
+   "@type": "Question",
+   "name": "Preciso contratar a obra com vocês?",
+   "acceptedAnswer": {
+    "@type": "Answer",
+    "text": "Não. O projeto é seu e você executa com quem quiser. Inclusive, com o detalhamento na mão fica muito mais fácil pedir orçamento para três marceneiros diferentes e comparar de verdade."
+   }
+  }
+ ]
+}
+</script>
+<!-- faq-schema:fim -->
 
 </body>
 </html>

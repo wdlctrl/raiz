@@ -5,6 +5,7 @@ DEPLOY.txt
 versao-A-*.html
 versao-B-*.html
 *.pdf
+subir-branch.sh
 
 .DS_Store
 Thumbs.db
